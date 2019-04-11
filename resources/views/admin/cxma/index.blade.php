@@ -13,7 +13,7 @@
 
 @section('content')
     @include('admin.common.message')
-    <a href="{{url('admin/cxma/create')}}" class="btn btn-primary margin-bottom"><i class="fa fa-paint-brush" style="margin-right: 6px"></i>创建</a>
+    <a href="{{url('admin/cxma/addFirst')}}" class="btn btn-primary margin-bottom"><i class="fa fa-paint-brush" style="margin-right: 6px"></i>创建</a>
     <div class="box box-primary">
         <div class="col-xs-14 col-sm-14">
             <div class="nav-tabs-custom" id="tabs">
@@ -41,6 +41,7 @@
                         <thead>
                         <tr>
                             <th>操作</th>
+                            <th>状态</th>
                             <th>标题</th>
                             <th>所属分类</th>
                             <th>通用码</th>
@@ -55,13 +56,39 @@
                             @foreach($res as $v)
                                 <tr>
                                     <td>
-                                        <a style="font-size: 16px" href="{{ url("/admin/cxma/edit/$v->id") }}"><i class="fa fa-fw fa-pencil" title="修改"></i></a>
-                                        <a style="font-size: 16px;color: #dd4b39;" href="javascript:;" onclick="delCate({{$v->id}})"><i class="fa fa-fw fa-trash-o" title="删除"></i></a>
+                                        @if($v->status == '1')
+                                            <button>
+                                                <a style="font-size: 16px" href="">
+                                                    编辑
+                                                </a>
+                                            </button>
+                                            &nbsp;&nbsp;
+                                            <button>
+                                                <a style="font-size: 16px" href="{{ url("/admin/cxma/addSecond/$v->id") }}">
+                                                    待生成海报
+                                                </a>
+                                            </button>
+                                           &nbsp;&nbsp;
+
+                                        @elseif($v->status == '2')
+                                            <button>
+                                                <a style="font-size: 16px" href="{{ url("/admin/cxma/edit/$v->id") }}">
+                                                    编辑
+                                                </a>
+                                            </button>
+                                            &nbsp;&nbsp;
+                                        @else
+                                            下载 &nbsp;&nbsp;
+                                        @endif
+                                        <a style="font-size: 16px;color: #dd4b39;" href="javascript:;" onclick="delCate({{$v->id}})">
+                                            <button>删除</button>
+                                        </a>
                                     </td>
+                                    <td class="text-muted">{{ $cx_status[$v->status] }}</td>
                                     <td class="text-muted">{{ $v->title }}</td>
                                     <td class="text-navy">{{ $v->category2 }}</td>
-                                    <td class="text-navy">{{ $v->xc_ma_url }}</td>
-                                    <td class="text-navy">{{ $v->haibao_url }}</td>
+                                    <td class="text-navy"><img src="{{ $v->xc_ma_url }}" alt="通用码" width="50px" height="50px"></td>
+                                    <td class="text-navy">@if(!empty($v->haibao_url))<img src="{{ $v->haibao_url }}" alt="前台吗" width="50px" height="50px">@else -- @endif</td>
                                     <td class="text-navy">{{ $v->order }}</td>
                                     <td class="text-red">@if($v->disabled=='0') 显示 @else 不显示 @endif</td>
                                     <td class="text-navy">@if(!empty($v->update_time)) {{ date("Y-m-d H:i:s",$v->update_time) }} @else -- @endif</td>
@@ -83,14 +110,14 @@
     </div>
     <script type="text/javascript">
         //删除数据
-        function delCate(news_id) {
+        function delCate(ht_id) {
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消'] //按钮
             }, function() {
                 $.ajax({
                     url: "{{ url('admin/cxma/destroy')}}",
                     type: "POST",
-                    data: {news_id: news_id,_token : "{{csrf_token()}}"},
+                    data: {ht_id: ht_id,_token : "{{csrf_token()}}"},
                     success:function(rs){
                         if(rs.status=='0'){
                             layer.msg(rs.msg);

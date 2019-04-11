@@ -79,14 +79,14 @@
     </div>
     <script type="text/javascript">
         //删除数据
-        function delCate(news_id) {
+        function delCate(ht_id) {
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消'] //按钮
             }, function() {
                 $.ajax({
                     url: "{{ url('admin/demo/destroy')}}",
                     type: "POST",
-                    data: {news_id: news_id,_token : "{{csrf_token()}}"},
+                    data: {ht_id: ht_id,_token : "{{csrf_token()}}"},
                     success:function(rs){
                         if(rs.status=='0'){
                             layer.msg(rs.msg);

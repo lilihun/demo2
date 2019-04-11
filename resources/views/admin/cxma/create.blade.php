@@ -3,23 +3,23 @@
     <link rel="stylesheet" type="text/css" href="{{ asset("public/lineditor/css/editor.css") }}">
     <h1>
         信息发布管理
-        <small>Demo</small>
+        <small>小程序码</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li><a href="{{url('/admin/demo/index')}}">Demo管理</a></li>
-        <li class="active">编辑Demo</li>
+        <li><a href="{{url('/admin/cxma/index')}}">小程序码管理</a></li>
+        <li class="active">编辑小程序码</li>
     </ol>
 @stop
 
 @section('content')
     @include('admin.common.validate')
     @include('admin.common.message')
-    <form class="form-horizontal" action="{{ url("/admin/demo/store") }}" method="post" name="submit1" role="form" id="specification"  data-validate-excluded=":disabled, :not(:visible)" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{{ url("/admin/cxma/store") }}" method="post" name="submit1" role="form" id="specification"  data-validate-excluded=":disabled, :not(:visible)" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <div class="panel panel-outter">
             <div class="panel-heading">
-                <h4>编辑Demo</h4>
+                <h4>编辑小程序码</h4>
             </div>
             <div class="panel-body">
                 <div class="col-md-11">
@@ -104,7 +104,7 @@
 
                     <div id="floor_2" class="panel panel-default">
                         <div class="panel-heading">
-                            Demo详情
+                            小程序码详情
                         </div>
                         {{--概况详情--}}
                         <div id="myTabContent" class="tab-content">

@@ -23,12 +23,21 @@ Route::group(['middleware' => ['web','admin.login']], function () {//web代表we
 
 // 小程序码
     Route::get('/admin/cxma/index', 'Admin\CxmaController@index');
-    Route::any('/admin/cxma/create', 'Admin\CxmaController@create');
+    Route::any('/admin/cxma/addFirst', 'Admin\CxmaController@addFirst'); // 生成【小程序码】页面
+    Route::any('/admin/cxma/do_addFirst', 'Admin\CxmaController@do_addFirst'); // 生成【小程序码】页面
+    Route::any('/admin/cxma/addSecond/{id}', 'Admin\CxmaController@addSecond'); // 生成【海报】页面
+    Route::any('/admin/cxma/do_addSecond/{id}', 'Admin\CxmaController@do_addSecond'); // 生成【海报】页面
+
     Route::post('/admin/cxma/store', 'Admin\CxmaController@store');
     Route::any('/admin/cxma/edit/{id}', 'Admin\CxmaController@edit')->where('id', '[0-9]+');
     Route::any('/admin/cxma/destroy', 'Admin\CxmaController@destroy');
     Route::get('/admin/cxma/test', 'Admin\CxmaController@test'); // 调试接口
-    
+
+    /*******************************************************
+                    =====公共方法=====
+    ******************************************************/
+    Route::post('/admin/image/upload', 'Api\CommentController@upload'); // 公共方法---【异步文件上传】
+
 });
 
 Route::any('/','IndexController@test');

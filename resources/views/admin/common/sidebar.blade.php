@@ -29,6 +29,21 @@
                         <a href="{{ url('admin/demo/index') }}"><i class="fa fa-circle-o"></i>模板列表</a>
                     </li>
                 </ul>
+            </li>
+{{--小程序码--}}
+            <li class="treeview" id="_cx_ma">
+                <a href="{{ url("admin/cxma/index") }}">
+                    <i class="fa fa-cube"></i> <span>小程序码</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li id="_cxma_index"  class="treeview" >
+                        <a href="{{ url('admin/cxma/index') }}"><i class="fa fa-circle-o"></i>列表</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </section>
 
@@ -42,5 +57,13 @@
         $("#_demo").addClass('active');
         $("#_demo >a>i").addClass('text-aqua');
         $("#_demo_guanli").addClass('active');
+    }
+
+//【小程序码管理】js判断
+    var cxma_index = '/admin/cxma';
+    if(server.indexOf(cxma_index)!= -1){
+        $("#_cx_ma").addClass('active');
+        $("#_cx_ma >a>i").addClass('text-aqua');
+        $("#_cxma_index").addClass('active');
     }
 </script>
