@@ -49,13 +49,17 @@ class WxController extends Controller
 
 
     // 第二步：调用接口生成微信二维码(这里以接口B为例)
-    public function getWxcode(){
+    public function getWxcode($params=''){
+        // 给默认值
+        $page = isset($params['page']) ? $params['page'] : 'pages/order/home/home'; // 小程序对应的访问页面
+        $scene = isset($params['scene']) ? $params['scene'] : 'test'; // 传给小程序的参数
+
         $ACCESS_TOKEN=$this->getWxAccessToken();
         $url="https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=".$ACCESS_TOKEN['access_token'];
         $post_data=
             array(
-                'page'=>'pages/order/home/home',
-                'scene'=>'123'//34%2CS853EE4QRP
+                'page'=>$page,
+                'scene'=>$scene//34%2CS853EE4QRP
         );
         $post_data=json_encode($post_data);
         $data=$this->send_post($url,$post_data);
@@ -178,8 +182,6 @@ class WxController extends Controller
                 imagettftext($imageRes,$val['fontSize'],$val['angle'],$val['left'],$val['top'],$fontColor,$val['fontPath'],$val['text']);
             }
         }
-
-
 
         //生成图片
         if(!empty($filename)){

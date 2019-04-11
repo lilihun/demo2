@@ -169,27 +169,27 @@ class DemoController extends Controller
      */
     public function destroy(Request $request)
     {
-        $news_id = $request->input("news_id");
-        if(is_numeric($news_id)===false || empty($news_id)){
+        $ht_id = $request->input("ht_id");
+        if(is_numeric($ht_id)===false || empty($ht_id)){
             $data = [
                 'status' => 1,
-                'msg' => '该新闻中心ID已不存在或已被删除，请重试！',
+                'msg' => '该ID已不存在或已被删除，请重试！',
             ];
             return $data;
         }
-        $re = DB::table("infonews")
-            ->where("news_id",$news_id)
+        $re = DB::table("demo")
+            ->where("id",$ht_id)
             ->delete();
         if($re){
             $data = [
                 'status' => 0,
-                'msg' => '新闻中心删除成功！',
+                'msg' => '删除成功！',
             ];
             return $data;
         }else{
             $data = [
                 'status' => 1,
-                'msg' => '新闻中心删除失败，请稍后重试！',
+                'msg' => '删除失败，请稍后重试！',
             ];
             return $data;
         }
