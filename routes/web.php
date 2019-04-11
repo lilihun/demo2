@@ -28,9 +28,7 @@ Route::group(['middleware' => ['web','admin.login']], function () {//web代表we
     Route::any('/admin/cxma/edit/{id}', 'Admin\CxmaController@edit')->where('id', '[0-9]+');
     Route::any('/admin/cxma/destroy', 'Admin\CxmaController@destroy');
     Route::get('/admin/cxma/test', 'Admin\CxmaController@test'); // 调试接口
-
-
-
+    
 });
 
 Route::any('/','IndexController@test');
