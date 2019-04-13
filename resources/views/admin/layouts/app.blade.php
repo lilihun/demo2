@@ -66,6 +66,8 @@
     <script src="{{asset('public/topshop/statics/scripts/jquery-catselect.js')}}"></script>
     <script src="{{asset('public/topshop/statics/scripts/jquery.form.js')}}"></script>
     <script src="{{asset('public/topshop/statics/scripts/jquery.jsonlist.min.js')}}"></script>
+    {{--上传图片封装JS--}}
+    <script src="{{asset('public/js/common.js')}}"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">

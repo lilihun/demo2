@@ -74,7 +74,7 @@
                                         <option value="">请选择海报</option>
                                         @if(count($haibao)>0)
                                             @foreach($haibao as $k=>$v)
-                                                <option value="{{$v->url}}">{{$v->url}}</option>
+                                                <option value="{{$v->url}}">{{$v->title}}</option>
                                             @endforeach
                                         @endif
                                     </select>

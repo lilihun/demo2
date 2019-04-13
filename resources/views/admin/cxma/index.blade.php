@@ -56,29 +56,26 @@
                             @foreach($res as $v)
                                 <tr>
                                     <td>
-                                        @if($v->status == '1')
+                                        @if($v->status == '2')
                                             <button>
-                                                <a style="font-size: 16px" href="">
+                                                <a style="font-size: 16px" href="{{ url("/admin/cxma/addFirst/$v->id") }}">
                                                     编辑
                                                 </a>
                                             </button>
                                             &nbsp;&nbsp;
                                             <button>
-                                                <a style="font-size: 16px" href="{{ url("/admin/cxma/addSecond/$v->id") }}">
-                                                    待生成海报
+                                                <a style="font-size: 16px" href="javascript:alert('即将上线!');">
+                                                    预览
                                                 </a>
                                             </button>
-                                           &nbsp;&nbsp;
+                                            &nbsp;&nbsp;
+                                            <button>
+                                                <a style="font-size: 16px" href="javascript:alert('即将上线!');">
+                                                    下载
+                                                </a>
+                                            </button>
+                                            &nbsp;&nbsp;
 
-                                        @elseif($v->status == '2')
-                                            <button>
-                                                <a style="font-size: 16px" href="{{ url("/admin/cxma/edit/$v->id") }}">
-                                                    编辑
-                                                </a>
-                                            </button>
-                                            &nbsp;&nbsp;
-                                        @else
-                                            下载 &nbsp;&nbsp;
                                         @endif
                                         <a style="font-size: 16px;color: #dd4b39;" href="javascript:;" onclick="delCate({{$v->id}})">
                                             <button>删除</button>
@@ -86,7 +83,7 @@
                                     </td>
                                     <td class="text-muted">{{ $cx_status[$v->status] }}</td>
                                     <td class="text-muted">{{ $v->title }}</td>
-                                    <td class="text-navy">{{ $v->category2 }}</td>
+                                    <td class="text-navy">{{ $category1[$v->category1] }}&nbsp;->&nbsp;{{ $category2[$v->category2] }}</td>
                                     <td class="text-navy"><img src="{{ $v->xc_ma_url }}" alt="通用码" width="50px" height="50px"></td>
                                     <td class="text-navy">@if(!empty($v->haibao_url))<img src="{{ $v->haibao_url }}" alt="前台吗" width="50px" height="50px">@else -- @endif</td>
                                     <td class="text-navy">{{ $v->order }}</td>

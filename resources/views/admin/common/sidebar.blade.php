@@ -43,6 +43,11 @@
                         <a href="{{ url('admin/cxma/index') }}"><i class="fa fa-circle-o"></i>列表</a>
                     </li>
                 </ul>
+                <ul class="treeview-menu">
+                    <li id="_hb_cxma_index"  class="treeview" >
+                        <a href="{{ url('admin/hb_cxma/index') }}"><i class="fa fa-circle-o"></i>海报</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </section>
@@ -62,8 +67,15 @@
 //【小程序码管理】js判断
     var cxma_index = '/admin/cxma';
     if(server.indexOf(cxma_index)!= -1){
-        $("#_cx_ma").addClass('active');
-        $("#_cx_ma >a>i").addClass('text-aqua');
         $("#_cxma_index").addClass('active');
+        $("#_cxma_index >a>i").addClass('text-aqua');
+        $("#_cx_ma").addClass('active');
+    }
+// 海报
+    var hb_cxma_index = '/admin/hb_cxma';
+    if(server.indexOf(hb_cxma_index)!= -1){
+        $("#_hb_cxma_index").addClass('active');
+        $("#_hb_cxma_index >a>i").addClass('text-aqua');
+        $("#_cx_ma").addClass('active');
     }
 </script>
