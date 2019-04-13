@@ -81,11 +81,11 @@
                                 <label for="" class="col-sm-2 control-label">是否显示：</label>
                                 <div class="radio">
                                     <label  class="form-inline">
-                                        <input type="radio" name="ht[is_show]" value='0' @if(!isset($res->is_show) || (isset($res->is_show) && $res->is_show=='0')) checked @endif>
+                                        <input type="radio" name="ht[is_show]" value='1' @if(!isset($res->is_show) || (isset($res->is_show) && $res->is_show=='1')) checked @endif>
                                         是&nbsp;&nbsp;&nbsp;&nbsp;
                                     </label>
                                     <label  class="form-inline">
-                                        <input type="radio" name="ht[is_show]" value='1' @if(isset($res->is_show) && $res->is_show=='1') checked @endif>
+                                        <input type="radio" name="ht[is_show]" value='0' @if(isset($res->is_show) && $res->is_show=='0') checked @endif>
                                         否
                                     </label>
                                 </div>
@@ -175,9 +175,10 @@
         function toSub() {
 //            检测上传图片是否已上传
             var url = $("input[name='ht[url]']").val();
+            var title = $("input[name='ht[title]']").val();
             var old_url = "{{ isset($res->url) ? $res->url : '' }}";
-            if(url == '' || url == undefined){
-                layer.msg("请上传海报！");
+            if(url == '' || url == undefined || title==''){
+                layer.msg("标题或海报为必填项");
                 return false;
             }
 

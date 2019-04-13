@@ -59,7 +59,7 @@
                                     <td class="text-navy">{{ $v->title }}</td>
                                     <td class="text-navy">@if(!empty($v->url))<img src="{{ $v->url }}" alt="海报" width="50px" height="50px">@else -- @endif</td>
                                     <td class="text-navy">{{ $v->order }}</td>
-                                    <td class="text-red">@if($v->is_show=='0') 显示 @else 不显示 @endif</td>
+                                    <td class="text-red">@if($v->is_show=='1') 显示 @else 不显示 @endif</td>
                                     <td class="text-navy">@if(!empty($v->update_time)) {{ date("Y-m-d H:i:s",$v->update_time) }} @else -- @endif</td>
                                 </tr>
                             @endforeach

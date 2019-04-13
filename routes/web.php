@@ -22,7 +22,7 @@ Route::group(['middleware' => ['web','admin.login']], function () {//web代表we
     Route::any('/admin/demo/destroy', 'Admin\DemoController@destroy');
 
 // 【小程序码】生成小程序码、海报码
-    Route::get('/admin/cxma/index', 'Admin\CxmaController@index');
+    Route::any('/admin/cxma/index/{type?}', 'Admin\CxmaController@index');
     Route::any('/admin/cxma/addFirst/{id?}', 'Admin\CxmaController@addFirst'); // 生成【小程序码】页面
     Route::any('/admin/cxma/do_addFirst', 'Admin\CxmaController@do_addFirst'); // 生成【小程序码】页面
     Route::any('/admin/cxma/addSecond/{id}', 'Admin\CxmaController@addSecond'); // 生成【海报】页面

@@ -18,22 +18,11 @@
         <div class="col-xs-14 col-sm-14">
             <div class="nav-tabs-custom" id="tabs">
                 <ul class="nav nav-tabs sub-nav-tabs">
-                    <li role="presentation" class="active"><a href="{{ url("admin/cxma/index")}}">中文版</a></li>
-                    <li class="pull-right header export-filter" data-value="" data-app="" data-model="">
-                        <div class="box-header with-border" style="display: none">
-                            <div class="box-tools">
-                                <form action="" method="get">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control input-sm pull-right" name="s_title"
-                                               style="width: 150px;" placeholder="搜索标题">
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </li>
+                    <li role="presentation" class="@if($type == '' || $type=='ALL') active @endif"><a href="{{ url("admin/cxma/index/ALL")}}">全部</a></li>
+                    <li role="presentation" class="@if($type == 'TYMA') active @endif"><a href="{{ url("admin/cxma/index/TYMA")}}">通用码</a></li>
+                    <li role="presentation" class="@if($type == 'QTMA') active @endif"><a href="{{ url("admin/cxma/index/QTMA")}}">前台码</a></li>
+                    <li role="presentation" class="@if($type == 'MDMA') active @endif"><a href="{{ url("admin/cxma/index/MDMA")}}">门店码</a></li>
+                    <li role="presentation" class="@if($type == 'GRMA') active @endif"><a href="{{ url("admin/cxma/index/GRMA")}}">个人码</a></li>
                 </ul>
                 <div class="box-body table-responsive">
                     <table class="table table-hover table-bordered">
@@ -41,9 +30,9 @@
                         <thead>
                         <tr>
                             <th>操作</th>
-                            <th>状态</th>
-                            <th>标题</th>
                             <th>所属分类</th>
+                            <th>标题</th>
+                            <th>状态</th>
                             <th>通用码</th>
                             <th>前台吗</th>
                             <th>排序</th>
@@ -81,11 +70,11 @@
                                             <button>删除</button>
                                         </a>
                                     </td>
-                                    <td class="text-muted">{{ $cx_status[$v->status] }}</td>
-                                    <td class="text-muted">{{ $v->title }}</td>
                                     <td class="text-navy">{{ $category1[$v->category1] }}&nbsp;->&nbsp;{{ $category2[$v->category2] }}</td>
-                                    <td class="text-navy"><img src="{{ $v->xc_ma_url }}" alt="通用码" width="50px" height="50px"></td>
-                                    <td class="text-navy">@if(!empty($v->haibao_url))<img src="{{ $v->haibao_url }}" alt="前台吗" width="50px" height="50px">@else -- @endif</td>
+                                    <td class="text-muted">{{ $v->title }}</td>
+                                    <td class="text-muted">{{ $cx_status[$v->status] }}</td>
+                                    <td class="text-navy">@if($v->category1 == 'TYMA') <img src="{{ $v->xc_ma_url }}" alt="通用码" width="50px" height="50px"> @else -- @endif</td>
+                                    <td class="text-navy">@if($v->category1 == 'QTMA') <img src="{{ $v->haibao_url }}" alt="前台吗" width="50px" height="50px"> @else -- @endif</td>
                                     <td class="text-navy">{{ $v->order }}</td>
                                     <td class="text-red">@if($v->disabled=='0') 显示 @else 不显示 @endif</td>
                                     <td class="text-navy">@if(!empty($v->update_time)) {{ date("Y-m-d H:i:s",$v->update_time) }} @else -- @endif</td>
@@ -93,7 +82,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="8" style="text-align: center">暂无数据</td>
+                                <td colspan="9" style="text-align: center">暂无数据</td>
                             </tr>
                         @endif
                         </tbody>

@@ -15,7 +15,7 @@
 @section('content')
     @include('admin.common.validate')
     @include('admin.common.message')
-    <form class="form-horizontal" action="{{ url("/admin/cxma/do_addFirst") }}" method="post" name="submit1" role="form" id="specification"  data-validate-excluded=":disabled, :not(:visible)" enctype="multipart/form-data">
+    <form class="form-horizontal" action="{{ url("/admin/cxma/do_addFirst") }}" method="post"  role="form" id="specification"  data-validate-excluded=":disabled, :not(:visible)" enctype="multipart/form-data">
         {!! csrf_field() !!}
         <input type="hidden" name="id" value="{{  isset($res->id) ? $res->id : '' }}">
         <div class="panel panel-outter">
@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="" class="col-sm-2 control-label"><span class="txt-required">*</span>一级分类：</label>
                                 <div class="col-sm-3">
-                                    <select name="ht[category1]" required id="act-selectshopcat" class="form-control" required>
+                                    <select name="ht[category1]" required id="category1" class="form-control" required>
                                         <option value="">请选择一级分类</option>
                                         @if(count($category1)>0)
                                             @foreach($category1 as $k=>$v)
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label for="" class="col-sm-2 control-label"><span class="txt-required">*</span>二级分类：</label>
                                 <div class="col-sm-3">
-                                    <select name="ht[category2]" required id="act-selectshopcat" class="form-control" required>
+                                    <select name="ht[category2]" required id="category2" class="form-control" required>
                                         <option value="">请选择二级分类</option>
                                         @if(count($category2)>0)
                                             @foreach($category2 as $k=>$v)
@@ -67,14 +67,14 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="hotel" @if(isset($res->category2) && $res->category2 == 'MDMA')  @else hidden @endif>
                                 <label for="" class="col-sm-2 control-label">酒店信息：</label>
                                 <div class="col-sm-3">
                                     <input type="text" name="ht[hotel_msg]" value="{{ isset($res->hotel_msg) ? $res->hotel_msg : '' }}" class="form-control" maxlength="30">
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" id="sales" @if(isset($res->category2) && $res->category2 == 'GRMA')  @else hidden @endif>
                                 <label for="" class="col-sm-2 control-label">销售人员信息：</label>
                                 <div class="col-sm-3">
                                     <input type="text" name="ht[sales_mag]" value="{{ isset($res->sales_mag) ? $res->sales_mag : '' }}" class="form-control" maxlength="30">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
 
-                    <div id="floor_2" class="panel panel-default">
+                    <div id="floor_2" class="panel panel-default" @if(isset($res->category1) && $res->category1 == 'QTMA')  @else hidden @endif>
                         <div class="panel-heading">
                             海报信息
                         </div>
@@ -206,7 +206,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <button type="submit" name="submit1" id="submit1" onclick="return toSub()" class="btn btn-primary btn-lg btn-block save-action" style="margin-left:1em;">保存</button>
+                        <button type="submit"  class="btn btn-primary btn-lg btn-block save-action" style="margin-left:1em;">保存</button>
                     </div>
                 </div>
             </div>
@@ -214,10 +214,41 @@
     </form>
 
     <script>
-        //提交前验证
-        function toSub() {
-            document.getElementById("specification").submit();
-        }
+        // 一级分类操作
+        $("#category1").on("change",function(){
+            var type = $("#category1 option:selected").val();
+            if(type == 'TYMA'){
+//                通用码
+                $("#floor_2").hide();
+
+            }else if(type == 'QTMA'){
+//                前台码
+                $("#floor_2").show();
+
+            }else{
+                layer.msg("请选择一级分类！");
+                return false;
+            }
+        });
+
+        // 二级分类操作
+        $("#category2").on("change",function(){
+            var type = $("#category2 option:selected").val();
+            if(type == 'MDMA'){
+//                门店码
+                $("#hotel").show();
+                $("#sales").hide();
+
+            }else if(type == 'GRMA'){
+//                个人码
+                $("#hotel").hide();
+                $("#sales").show();
+
+            }else{
+                layer.msg("请选择二级分类！");
+                return false;
+            }
+        });
 
     </script>
 @stop

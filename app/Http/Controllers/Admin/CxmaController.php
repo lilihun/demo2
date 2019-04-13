@@ -59,11 +59,41 @@ class CxmaController extends Controller
 
 
     // 列表
-    public function index()
+    public function index(Request $request)
     {
-        $data['res'] = DB::table("cx_ma")
-            ->orderBy("order",'desc')
-            ->paginate(10);
+        $data['type'] = isset($request->type) ? $request->type : '';
+
+        switch($data['type']){
+            case 'TYMA':
+                $data['res'] = DB::table("cx_ma")
+                    ->orderBy("order",'desc')
+                    ->where("category1",$data['type'])
+                    ->paginate(5);
+                break;
+            case 'QTMA':
+                $data['res'] = DB::table("cx_ma")
+                    ->orderBy("order",'desc')
+                    ->where("category1",$data['type'])
+                    ->paginate(5);
+                break;
+            case 'MDMA':
+                $data['res'] = DB::table("cx_ma")
+                    ->orderBy("order",'desc')
+                    ->where("category2",$data['type'])
+                    ->paginate(5);
+                break;
+            case 'GRMA':
+                $data['res'] = DB::table("cx_ma")
+                    ->orderBy("order",'desc')
+                    ->where("category2",$data['type'])
+                    ->paginate(5);
+                break;
+            default:
+                $data['res'] = DB::table("cx_ma")
+                    ->orderBy("order",'desc')
+                    ->paginate(5);
+                break;
+        }
         $data['cx_status'] = Config::get("params.cx_status");
         $data['category1'] = Config::get("params.cx_category1");
         $data['category2'] = Config::get("params.cx_category2");
@@ -142,6 +172,7 @@ class CxmaController extends Controller
                 // 无需生成海报
                 if(isset($request->id) && $request->id !=''){
                     // 更新操作
+                    $data['update_time'] = time();
                     $up = DB::table("cx_ma")->where("id",$request->id)->update($data);
                     if($up === false){
                         DB::rollBack();
@@ -208,6 +239,7 @@ class CxmaController extends Controller
 
                 if(isset($request->id) && $request->id !=''){
                     // 更新操作
+                    $data['update_time'] = time();
                     $up = DB::table("cx_ma")->where("id",$request->id)->update($data);
                     if($up === false){
                         DB::rollBack();
@@ -273,7 +305,7 @@ class CxmaController extends Controller
     public function hb_index()
     {
         $data['res'] = DB::table("cx_haibao")
-            ->paginate(10);
+            ->paginate(5);
         $data['label'] = '海报';
         return view("admin.cxma.hb_index")->with($data);
     }
@@ -308,8 +340,8 @@ class CxmaController extends Controller
     {
         $input = $request->input("ht");
         // 检测参数是否为必填
-        if(!isset($input['url'])){
-            return back()->with("error","操作失败！【海报为必填项！】");
+        if(!isset($input['url']) || !isset($input['title'])){
+            return back()->with("error","操作失败！【标题或海报为必填项！】");
         }
         if(isset($request->id) && $request->id!='')
         {
