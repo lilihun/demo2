@@ -27,6 +27,9 @@ class CommentController extends Controller
         if ($request->ajax()) {
             $index = 0;		//$_FILES 以文件name为数组下标，不适用foreach($_FILES as $index=>$file)
             $dir_base = "./storage/app/uploads/info/"; 	//文件上传根目录
+            if(!is_file($dir_base)){
+                @mkdir($dir_base);
+            }
             $filePath =[];  // 定义空数组用来存放图片路径
             foreach($_FILES as $file)
             {
@@ -51,7 +54,7 @@ class CommentController extends Controller
                     $rEFileTypes = "/^\.(jpg|jpeg|gif|png|pdf){1}$/i";
                     if ($_FILES[$upload_file_name]['size'] <= $MAXIMUM_FILESIZE &&
                         preg_match($rEFileTypes, $sExtension)) {
-                        if(!move_uploaded_file($_FILES[$upload_file_name]['tmp_name'],$dir_base.$filename)){
+                        if(!@move_uploaded_file($_FILES[$upload_file_name]['tmp_name'],$dir_base.$filename)){
                             $res = [
                                 'rsp'=>'error',
                                 'msg'=>json_decode(json_encode('上传失败',JSON_UNESCAPED_UNICODE)),
