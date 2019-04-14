@@ -42,13 +42,15 @@
                                 <div class="col-sm-10"  style="width: auto">
                                     <div class="multiple-upload pro-thumb" >
                                         @if(isset($res->url))
-                                        <div class="multiple-item">
-                                            <div class="multiple-del glyphicon glyphicon-remove-circle"></div>
-                                            <a class="select-image" data-toggle="modal" href="" data-target="#gallery_modal">
-                                                <input type="hidden" name="ht[url]" value="{{$res->url}}">
-                                                <div class="img-put"><img src="{{$res->url}}"></div>
-                                            </a>
-                                        </div>
+                                            @foreach(unserialize($res->url) as $k=>$v)
+                                                <div class="multiple-item">
+                                                    <div class="multiple-del glyphicon glyphicon-remove-circle"></div>
+                                                    <a class="select-image" data-toggle="modal" href="" data-target="#gallery_modal">
+                                                        <input type="hidden" name="ht[url][]" value="{{$v}}">
+                                                        <div class="img-put"><img src="{{$v}}"></div>
+                                                    </a>
+                                                </div>
+                                            @endforeach
                                         @endif
                                         <div class="multiple-add"  data-isMultiple="true" id="sub_uploads_1">
                                             <i class="glyphicon glyphicon-plus"></i>
@@ -144,8 +146,8 @@
                 upload_id:'sub_uploads_'+num,
                 form_id:'uploadForm_'+num,
                 input_id:'inputFile_'+num,
-                type:'one',
-                input_name:'ht[url]',
+                type:'more',
+                input_name:'ht[url][]',
 //                以下参数为固定值
                 url:url,
                 path:path,
@@ -174,10 +176,12 @@
         //提交前验证
         function toSub() {
 //            检测上传图片是否已上传
-            var url = $("input[name='ht[url]']").val();
+            var url = $("input[name='ht[url][]']").length;
             var title = $("input[name='ht[title]']").val();
             var old_url = "{{ isset($res->url) ? $res->url : '' }}";
-            if(url == '' || url == undefined || title==''){
+            if(url == 0 || title==''){
+                console.log(url);
+                console.log(title);
                 layer.msg("标题或海报为必填项");
                 return false;
             }

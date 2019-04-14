@@ -57,7 +57,15 @@
                                         <a style="font-size: 16px;color: #dd4b39;" href="javascript:;" onclick="delCate({{$v->id}})"><i class="fa fa-fw fa-trash-o" title="删除"></i></a>
                                     </td>
                                     <td class="text-navy">{{ $v->title }}</td>
-                                    <td class="text-navy">@if(!empty($v->url))<img src="{{ $v->url }}" alt="海报" width="50px" height="50px">@else -- @endif</td>
+                                    <td class="text-navy">
+                                        @if(!empty($v->url))
+                                            @foreach(unserialize($v->url) as $k1=>$v1)
+                                                <img src="{{ $v1 }}" alt="海报" width="50px" height="50px">
+                                            @endforeach
+                                        @else
+                                            --
+                                        @endif
+                                    </td>
                                     <td class="text-navy">{{ $v->order }}</td>
                                     <td class="text-red">@if($v->is_show=='1') 显示 @else 不显示 @endif</td>
                                     <td class="text-navy">@if(!empty($v->update_time)) {{ date("Y-m-d H:i:s",$v->update_time) }} @else -- @endif</td>
@@ -83,7 +91,9 @@
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消'] //按钮
             }, function() {
-                $.ajax({
+                location.href = "{{ url("admin/hb_cxma/destroy") }}"+'/'+ht_id;
+
+/*                $.ajax({
                     url: "{{ url('admin/hb_cxma/destroy')}}",
                     type: "POST",
                     data: {ht_id: ht_id,_token : "{{csrf_token()}}"},
@@ -98,7 +108,7 @@
                     error:function(jqXHR,textStatus,errorThrown){
                         layer.msg("服务器错误！"+textStatus);
                     },
-                });
+                });*/
             });
         }
     </script>

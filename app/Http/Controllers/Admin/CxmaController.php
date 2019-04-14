@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Api\WxController;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
 /**
  * 小程序码
@@ -343,6 +344,9 @@ class CxmaController extends Controller
         if(!isset($input['url']) || !isset($input['title'])){
             return back()->with("error","操作失败！【标题或海报为必填项！】");
         }
+        // 处理图片URL
+        $input['url'] = serialize($input['url']);
+
         if(isset($request->id) && $request->id!='')
         {
             // 【更新操作】
@@ -370,39 +374,23 @@ class CxmaController extends Controller
     // 保存海报
     public function hb_destroy(Request $request)
     {
-        $ht_id = $request->input("ht_id");
+        $ht_id = $request->id;
         if(is_numeric($ht_id)===false || empty($ht_id)){
-            $data = [
-                'status' => 1,
-                'msg' => '删除失败！【该ID已不存在或已被删除，请重试！】',
-            ];
-            return $data;
+            return back()->with("error",'删除失败！【该ID已不存在或已被删除，请重试！】');
         }
         // 检测该海报是否已生成前台码
         $count = DB::table("cx_ma")->where("haibao_id",$ht_id)->count();
         if($count>0){
-            $data = [
-                'status' => 1,
-                'msg' => '删除失败！【该海报已生成前台码，不能删除。】',
-            ];
-            return $data;
+            return back()->with("error",'删除失败！【该海报已生成前台码，请先移除对应的前台码】');
         }
 
         $re = DB::table("cx_haibao")
             ->where("id",$ht_id)
             ->delete();
         if($re){
-            $data = [
-                'status' => 0,
-                'msg' => '删除成功！',
-            ];
-            return $data;
+            return redirect("admin/hb_cxma/index")->with("success",'删除成功');
         }else{
-            $data = [
-                'status' => 1,
-                'msg' => '删除失败！【请稍后重试！】',
-            ];
-            return $data;
+            return back()->with("error",'删除失败！【请稍后重试！】');
         }
     }
 

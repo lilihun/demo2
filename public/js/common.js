@@ -40,7 +40,6 @@ var Upload = (function(window){
             if( this.type != 'one')
             {
                 // 多文件上传
-                info.input_name = info.input_name+'[]';
                 nums = 10;
             }else
             {

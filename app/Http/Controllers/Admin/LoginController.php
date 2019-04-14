@@ -43,7 +43,13 @@ class LoginController extends Controller
             if($user->user_name != $input['user_name'] || $user->user_pass != sha1($input['user_pass'])){
                 return back()->with('msg','用户名或者密码错误！');
             }
-            session(['user'=>$user]);
+            $user_new = [
+                'user_id'=>$user->user_id,
+                'user_name'=>$user->user_name,
+                'user_pass'=>$user->user_pass,
+                'gid'=>$user->gid,
+            ];
+            session(['user'=>$user_new]);
             return redirect('admin');
         }else {
             return view('admin.login');

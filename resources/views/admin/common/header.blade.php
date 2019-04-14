@@ -62,7 +62,8 @@
 
                         <img src="{{asset('public/topshop/statics/images/user2-160x160.jpg')}}" class="user-image" alt="User Image">
                         {{--<span class="hidden-xs">{{auth()->user()->uname}}</span>--}}
-                        <span class="hidden-xs">{{ Session::get('user')->user_name}}</span>
+                        {{--<span class="hidden-xs">{{ Session::get('user')->user_name}}</span>--}}
+                        <span class="hidden-xs">{{session("user.user_name")}}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -70,7 +71,8 @@
                             <img src="{{asset('public/topshop/statics/images/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ Session::get('user')->user_name}}
+{{--                                {{ Session::get('user')->user_name}}--}}
+                                {{session("user.user_name")}}
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -91,7 +93,9 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ url("admin/editPwd/".Session::get('user')->user_id) }}" class="btn btn-success btn-flat">修改密码</a>
+{{--                                <a href="{{ url("admin/editPwd/".Session::get('user')->user_id) }}" class="btn btn-success btn-flat">修改密码</a>--}}
+                                <a href="{{ url("admin/editPwd/")}}{{ session("user.user_id") }}" class="btn btn-success btn-flat">修改密码</a>
+
                             </div>
                             <div class="pull-right">
                                 <a href="{{url('admin/quit')}}" class="btn btn-success btn-flat">退出</a>
