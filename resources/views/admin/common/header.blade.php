@@ -94,7 +94,7 @@
                         <li class="user-footer">
                             <div class="pull-left">
 {{--                                <a href="{{ url("admin/editPwd/".Session::get('user')->user_id) }}" class="btn btn-success btn-flat">修改密码</a>--}}
-                                <a href="{{ url("admin/editPwd/")}}{{ session("user.user_id") }}" class="btn btn-success btn-flat">修改密码</a>
+                                <a href="{{ url("admin/editPwd")}}/{{ session("user.user_id") }}" class="btn btn-success btn-flat">修改密码</a>
 
                             </div>
                             <div class="pull-right">

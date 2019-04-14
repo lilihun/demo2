@@ -2,14 +2,13 @@
 @section('content-header')
     <link rel="stylesheet" type="text/css" href="{{ asset("public/lineditor/css/editor.css") }}">
     <h1>
-        小程序码管理
-        <small>{{ $label }}</small>
+        {{ $label }}
     </h1>
-    <ol class="breadcrumb">
+{{--    <ol class="breadcrumb">
         <li><a href="{{url('/admin')}}"><i class="fa fa-dashboard"></i> 主页</a></li>
         <li><a href="{{url('/admin/infonews/index')}}">{{ $label }}管理</a></li>
         <li class="active">{{ $label }}</li>
-    </ol>
+    </ol>--}}
 @stop
 
 @section('content')
@@ -18,9 +17,9 @@
         {!! csrf_field() !!}
         <input type="hidden" name="id" value="{{  isset($res->id) ? $res->id : '' }}">
         <div class="panel panel-outter">
-            <div class="panel-heading">
-                <h4>{{ $label }}</h4>
-            </div>
+            {{--<div class="panel-heading">--}}
+                {{--<h4>{{ $label }}</h4>--}}
+            {{--</div>--}}
             <div class="panel-body">
                 <div class="col-md-11">
                     <div id="floor_1" class="panel panel-default">

@@ -53,7 +53,7 @@
                                         <option value="">请选择二级分类</option>
                                         @if(count($category2)>0)
                                             @foreach($category2 as $k=>$v)
-                                                <option value="{{$k}}" @if(isset($res->category2) && $res->category2==$k) selected @endif>{{$v}}</option>
+                                                <option value="{{$k}}" @if(isset($res->category2) && $res->category2==$k || old("category2") == $k) selected @endif>{{$v}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label for="" class="col-sm-2 control-label"><span class="txt-required">*</span> 标题：</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ht[title]" value="{{ isset($res->title) ? $res->title : '' }}" required class="form-control" maxlength="50">
+                                    <input type="text" name="ht[title]" value="{{ isset($res->title) ? $res->title : old('title') }}" required class="form-control" maxlength="50">
                                 </div>
                             </div>
 
