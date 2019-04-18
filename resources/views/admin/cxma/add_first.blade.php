@@ -38,7 +38,7 @@
                                         <option value="">请选择一级分类</option>
                                         @if(count($category1)>0)
                                             @foreach($category1 as $k=>$v)
-                                                <option value="{{$k}}" @if(isset($res->category1) && $res->category1==$k) selected @endif>{{$v}}</option>
+                                                <option value="{{$k}}" @if(isset($res->category1) && $res->category1==$k || old("category1") == $k) selected @endif>{{$v}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -70,14 +70,14 @@
                             <div class="form-group" id="hotel" @if(isset($res->category2) && $res->category2 == 'MDMA')  @else hidden @endif>
                                 <label for="" class="col-sm-2 control-label">酒店信息：</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ht[hotel_msg]" value="{{ isset($res->hotel_msg) ? $res->hotel_msg : '' }}" class="form-control" maxlength="30">
+                                    <input type="text" name="ht[hotel_msg]" value="{{ isset($res->hotel_msg) ? $res->hotel_msg : old('hotel_msg') }}" class="form-control" maxlength="30">
                                 </div>
                             </div>
 
                             <div class="form-group" id="sales" @if(isset($res->category2) && $res->category2 == 'GRMA')  @else hidden @endif>
                                 <label for="" class="col-sm-2 control-label">销售人员信息：</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ht[sales_mag]" value="{{ isset($res->sales_mag) ? $res->sales_mag : '' }}" class="form-control" maxlength="30">
+                                    <input type="text" name="ht[sales_mag]" value="{{ isset($res->sales_mag) ? $res->sales_mag : old('sales_mag') }}" class="form-control" maxlength="30">
                                 </div>
                             </div>
 
@@ -124,7 +124,7 @@
                                         <option value="">请选择海报</option>
                                         @if(count($haibao)>0)
                                             @foreach($haibao as $k=>$v)
-                                                <option value="{{$v->id}}" @if(isset($res->haibao_id) && $res->haibao_id==$v->id) selected @endif>{{$v->title}}</option>
+                                                <option value="{{$v->id}}" @if(isset($res->haibao_id) && $res->haibao_id==$v->id || old('haibao_id') == $v->id ) selected @endif>{{$v->title}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -135,7 +135,7 @@
                             <div class="form-group">
                                 <label for="" class="col-sm-2 control-label"><span class="txt-required">*</span> 文字水印：</label>
                                 <div class="col-sm-3">
-                                    <input type="text" name="ht[remark]" value="{{ isset($res->remark) ? $res->remark : '0' }}"  class="form-control" maxlength="50">
+                                    <input type="text" name="ht[remark]" value="{{ isset($res->remark) ? $res->remark : old('remark') }}"  class="form-control" maxlength="50">
                                 </div>
                             </div>
 
@@ -163,7 +163,7 @@
                                     <span class="txt-required">*</span> 左边距
                                 </label>
                                 <div class="col-sm-3">
-                                    <input type="number" name="ht[left]" value="{{ isset($res->left) ? $res->left : '0' }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
+                                    <input type="number" name="ht[left]" value="{{ isset($res->left) ? $res->left : old('remark') }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
                                 </div>
                             </div>
                             {{--右边距--}}
@@ -172,7 +172,7 @@
                                     <span class="txt-required">*</span> 右边距
                                 </label>
                                 <div class="col-sm-3">
-                                    <input type="number" name="ht[right]" value="{{ isset($res->right) ? $res->right : '0' }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
+                                    <input type="number" name="ht[right]" value="{{ isset($res->right) ? $res->right : old('remark') }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
                                 </div>
                             </div>
                             {{--上边距--}}
@@ -181,7 +181,7 @@
                                     <span class="txt-required">*</span> 上边距
                                 </label>
                                 <div class="col-sm-3">
-                                    <input type="number" name="ht[top]" value="{{ isset($res->top) ? $res->top : '0' }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
+                                    <input type="number" name="ht[top]" value="{{ isset($res->top) ? $res->top : old('remark') }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
                                 </div>
                             </div>
                             {{--下边距--}}
@@ -190,7 +190,7 @@
                                     <span class="txt-required">*</span> 下边距
                                 </label>
                                 <div class="col-sm-3">
-                                    <input type="number" name="ht[bottom]" value="{{ isset($res->bottom) ? $res->bottom : '0' }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
+                                    <input type="number" name="ht[bottom]" value="{{ isset($res->bottom) ? $res->bottom : old('remark') }}"  required  class="form-control" maxlength="5" min="0" placeholder="">
                                 </div>
                             </div>
                             {{--透明度--}}

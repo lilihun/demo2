@@ -128,21 +128,21 @@ class CxmaController extends Controller
     public function do_addFirst(Request $request)
     {
         $data = $request->input("ht");
-        return back()->withInput($data)->with("error","失败！");
+//        return back()->withInput($data)->with("error","失败！");
         // 第一步 判断分类属于门店码还是个人码
         switch($data['category2']){
             case 'MDMA':
                 if(!isset($data['hotel_msg']) || $data['hotel_msg'] ==''){
-                    return back()->withInput("error","操作失败！【酒店信息不能为空！】");
+                    return back()->withInput($data)->with("error","操作失败！【酒店信息不能为空！】");
                 }
                 break;
             case 'GRMA':
                 if(!isset($data['sales_mag']) || $data['sales_mag'] ==''){
-                    return back()->withInput("error","操作失败！【销售人员信息不能为空！】");
+                    return back()->withInput($data)->with("error","操作失败！【销售人员信息不能为空！】");
                 }
                 break;
             default:
-                return back()->withInput("error","操作失败！【二级分类数据异常，请重试！】");
+                return back()->withInput($data)->with("error","操作失败！【二级分类数据异常，请重试！】");
                 break;
         }
 
@@ -165,7 +165,7 @@ class CxmaController extends Controller
         if($res_2){
             $data['xc_ma_url'] = substr($res_2,1);
         }else{
-            return back()->withInput("error","保存失败！【生成小程序码失败】");
+            return back()->withInput($data)->with("error","保存失败！【生成小程序码失败】");
         }
 
         // 判断一级分类属于通用码还是前台码
@@ -178,14 +178,14 @@ class CxmaController extends Controller
                     $up = DB::table("cx_ma")->where("id",$request->id)->update($data);
                     if($up === false){
                         DB::rollBack();
-                        return back()->withInput("error","保存失败！【更新表数据失败】");
+                        return back()->withInput($data)->with("error","保存失败！【更新表数据失败】");
                     }
                 }else{
                     // 新增操作
                     $insert = DB::table("cx_ma")->insert($data);
                     if(!$insert){
                         DB::rollBack();
-                        return back()->withInput("error","保存失败！【插入表数据失败】");
+                        return back()->withInput($data)->with("error","保存失败！【插入表数据失败】");
                     }
                 }
 
@@ -197,7 +197,7 @@ class CxmaController extends Controller
                 $res_haiba = DB::table("cx_haibao")->where("id",$data['haibao_id'])->first();
                 if(!isset($res_haiba->id) && $res_haiba->id == ''){
                     // 海报不能为空
-                    return back()->withInput("error","保存失败！【该海报ID不存在资源，请重试！】");
+                    return back()->withInput($data)->with("error","保存失败！【该海报ID不存在资源，请重试！】");
                 }
                 $background = '.'.$data['xc_ma_url'];//二维码资源
                 //方法
@@ -234,7 +234,7 @@ class CxmaController extends Controller
                 $filename = $new_file.time().'.jpg';
                 $haibao_url = $this->Wxapi->createPoster($config,$filename);
                 if(!$haibao_url){
-                    return back()->withInput("error","保存失败！【生成海报失败】");
+                    return back()->withInput($data)->with("error","保存失败！【生成海报失败】");
                 }
                 $data['haibao_url'] = substr($haibao_url,1); //去除.
                 unset($data['haibao']);
@@ -245,7 +245,7 @@ class CxmaController extends Controller
                     $up = DB::table("cx_ma")->where("id",$request->id)->update($data);
                     if($up === false){
                         DB::rollBack();
-                        return back()->withInput("error","保存失败！【更新表数据失败】");
+                        return back()->withInput($data)->with("error","保存失败！【更新表数据失败】");
                     }
 
                 }else{
@@ -253,13 +253,13 @@ class CxmaController extends Controller
                     $insert = DB::table("cx_ma")->insert($data);
                     if(!$insert){
                         DB::rollBack();
-                        return back()->withInput("error","保存失败！【保存表数据失败】");
+                        return back()->withInput($data)->with("error","保存失败！【保存表数据失败】");
                     }
                 }
 
                 break;
             default:
-                return back()->withInput("error","操作失败！【一级分类数据异常，请重试！】");
+                return back()->withInput($data)->with("error","操作失败！【一级分类数据异常，请重试！】");
                 break;
         }
 

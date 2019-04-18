@@ -52,19 +52,42 @@
                                                 </a>
                                             </button>
                                             &nbsp;&nbsp;
-                                            <button>
-                                                <a style="font-size: 16px" href="javascript:alert('即将上线!');">
-                                                    预览
-                                                </a>
-                                            </button>
-                                            &nbsp;&nbsp;
-                                            <button>
-                                                <a style="font-size: 16px" href="javascript:alert('即将上线!');">
-                                                    下载
-                                                </a>
-                                            </button>
-                                            &nbsp;&nbsp;
 
+                                            @if($v->category1 == 'TYMA')
+                                                <button>
+                                                    <a style="font-size: 16px" href="{{ $v->xc_ma_url }}" target="_blank">
+                                                        预览
+                                                    </a>
+                                                </button>
+                                                &nbsp;&nbsp;
+                                                <button>
+                                                    <a style="font-size: 16px" href="{{ $v->xc_ma_url }}" download="{{ $v->title }}">
+                                                        下载
+                                                    </a>
+                                                </button>
+
+                                            @elseif($v->category1 == 'QTMA')
+                                                <button>
+                                                    <a style="font-size: 16px" href="{{ $v->haibao_url }}" target="_blank">
+                                                        预览
+                                                    </a>
+                                                </button>
+                                                &nbsp;&nbsp;
+                                                <button>
+                                                    <a style="font-size: 16px" href="{{ $v->haibao_url }}" download="{{ $v->title }}">
+                                                        下载
+                                                    </a>
+                                                </button>
+                                            @else
+                                                <button>
+                                                    不支持预览
+                                                </button>
+                                                &nbsp;&nbsp;
+                                                <button>
+                                                    不支持下载
+                                                </button>
+                                            @endif
+                                            &nbsp;&nbsp;
                                         @endif
                                         <a style="font-size: 16px;color: #dd4b39;" href="javascript:;" onclick="delCate({{$v->id}})">
                                             <button>删除</button>
@@ -94,6 +117,7 @@
             </div>
         </div>
     </div>
+    <img id="preview" />
     <script type="text/javascript">
         //删除数据
         function delCate(ht_id) {
@@ -117,6 +141,34 @@
                     },
                 });
             });
+        }
+
+        // 图片预览
+        function imgPreview(fileDom) {
+            alert(fileDom);
+            //判断是否支持FileReader
+            if (window.FileReader) {
+                var reader = new FileReader();
+            } else {
+                alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+            }
+
+            //获取文件
+            /*            var file = fileDom.files[0];
+                        var imageType = /^image\//;
+                        //是否是图片
+                        if (!imageType.test(file.type)) {
+                            alert("请选择图片！");
+                            return;
+                        }*/
+            //读取完成
+            reader.onload = function(e) {
+                //获取图片dom
+                var img = document.getElementById("preview");
+                //图片路径设置为读取的图片
+                img.src = fileDom;
+            };
+            reader.readAsDataURL('http://lc.demo.com'+fileDom);
         }
     </script>
 @stop
