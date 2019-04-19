@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * 测试首页
@@ -21,6 +22,32 @@ class IndexController extends Controller
      */
     public function test()
     {
+        // 插入100w条数据
+        $insert_data = [
+            'title'=>'测试数据'.date("YmdHis",time()),
+            'url'=>'a:1:{i:0;s:32:"/storage/app/uploads/info/22.jpg";}',
+            'is_show'=>'1',
+            'create_time'=>time(),
+            'order'=>'0',
+        ];
+        list($usec, $sec) = explode(' ', microtime());
+        set_time_limit(1000000);
+        $i = 0;
+        while ($i < 10000000){
+            $i++;
+            $insert = DB::table("cx_haibao")->insert($insert_data);
+        }
+        list($usec2, $sec2) = explode(' ', microtime());
+
+        echo"写入成功,耗时：",$sec2-$sec;exit();
+
+        list($usec, $sec) = explode(' ', microtime());
+        $res = DB::table("cx_haibao")->get();
+        list($usec2, $sec2) = explode(' ', microtime());
+        echo '<PRE>';print_r($res);
+        echo"读取成功,耗时：",$sec2-$sec;exit();
+
+
         $is_customized = 'false';
         $is_chushi = 'false'; // 全部设计任务为 初始状态标识
         $is_createall = 'true'; // TODO 所有的定制的sku都已经发布设计任务 状态标识
