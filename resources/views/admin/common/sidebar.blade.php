@@ -26,14 +26,14 @@
             $Autorlists=array();
             }
             $sulis = array(
-            '"'.'cxma'.'"'=>"小程序码",
-            '"'.'cxma_list'.'"'=>"列表",
-            '"'.'cxma_haibao'.'"'=>"海报",
+            'cxma'=>"小程序码",
+            'cxma_list'=>"列表",
+            'cxma_haibao'=>"海报",
             );
             $sulis_ca = array(
-            '"'.'cxma'.'"'=>"fa fa-cube",
-            '"'.'cxma_list'.'"'=>"fa fa-cube",
-            '"'.'cxma_haibao'.'"'=>"fa fa-cube",
+            'cxma'=>"fa fa-cube",
+            'cxma_list'=>"fa fa-cube",
+            'cxma_haibao'=>"fa fa-cube",
             );
             $au=Config::get("Authority.AuthorList");
             }

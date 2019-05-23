@@ -1,55 +1,39 @@
 @extends('admin.layouts.app')
 @section('content')
+    @include('admin.common.message')
+    <a href="{{url('/account/user/add')}}" class="btn btn-primary margin-bottom"><i class="fa fa-paint-brush" style="margin-right: 6px"></i>添加子帐号</a>
     <div class="box box-primary">
-        <div class="mailbox-controls with-border">
-            <a href="{{url('/account/user/add')}}" class="btn btn-default btn-sm text-light-blue"><i class="fa fa-plus-square-o"></i> 添加子帐号</a>
-        </div>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>登录账号</th>
-                <th>角色</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            {{--<{if $data}>--}}
-            {{--<tbody>--}}
-            {{--<{foreach from=$data item=item}>--}}
-            {{--<tr>--}}
-                {{--<td><{$item.login_account}></td>--}}
-                {{--<td><{$rolesName.{$item.role_id}}></td>--}}
-                {{--<td><{$item.mobile}></td>--}}
-                {{--<td><{$item.email}></td>--}}
-                {{--<td>--}}
-                    {{--<a href="<{url action=topshop_ctl_account_list@edit seller_id=$item.seller_id}>">编辑</a>&nbsp;&nbsp;--}}
-                    {{--<a href="#" data-seller-id="<{$item.seller_id}>" data-toggle="modal" data-target="#modifyAccountShopPwd">修改密码</a>&nbsp;&nbsp;--}}
-                    {{--<a href="<{url action=topshop_ctl_account_list@delete seller_id=$item.seller_id}>" class="remove text-danger" >删除</a>--}}
-                {{--</td>--}}
-            {{--</tr>--}}
-            {{--<{/foreach}>--}}
-            {{--</tbody>--}}
-            {{--<{else}>--}}
-            <tbody>
-            @foreach($userlist as $k=>$v)
-            <tr>
-                <td>{{$v->user_name}}</td>
-                <td>{{$v->gname}}</td>
-                <td>
-                    <a href="{{url('/account/user/edit',[$v->user_id])}}">编辑</a>&nbsp;&nbsp;
-                    <a href="{{url('/account/user/del',[$v->user_id])}}" class="remove text-danger" >删除</a>
-                </td>
-            </tr>
-            @endforeach
-            </tbody>
+        <div class="col-xs-14 col-sm-14">
+            <div class="nav-tabs-custom" id="tabs">
+                <div class="box-body table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tbody>
+                        <thead>
+                        <tr>
+                            <th>登录账号</th>
+                            <th>角色</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($userlist as $k=>$v)
+                            <tr>
+                                <td>{{$v->user_name}}</td>
+                                <td>{{$v->gname}}</td>
+                                <td>
+                                    <a href="{{url('/account/user/edit',[$v->user_id])}}">编辑</a>&nbsp;&nbsp;
+                                    <a href="{{url('/account/user/del',[$v->user_id])}}" class="remove text-danger" >删除</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
-            {{--<tbody id="none_cat">--}}
-            {{--<tr class="none-information">--}}
-                {{--<td colspan="6"><p class="help-block text-center">暂无数据</p></td>--}}
-            {{--</tr>--}}
-            {{--</tbody>--}}
-            {{--<{/if}>--}}
-        </table>
+            </div>
+        </div>
     </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="modifyAccountShopPwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
