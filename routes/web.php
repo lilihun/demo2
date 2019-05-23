@@ -48,14 +48,15 @@ Route::group(['middleware' => ['web','admin.login']], function () {//web代表we
     Route::get('/account/roles/add','Admin\AuthorityController@Roadd');//新增角色页面
     Route::get('/account/roles/del/{gid}','Admin\AuthorityController@Rodel');//删除角色
 
-
-    Route::get('/admin/cxma/test', 'Admin\CxmaController@test'); // 调试接口
-
     /*******************************************************
                     =====公共方法=====
     ******************************************************/
     Route::any('/admin/image/upload', 'Api\CommentController@upload'); // 公共方法---【异步文件上传】
-
 });
+
+/**********测试方法****************/
+Route::get('/admin/cxma/test', 'Admin\CxmaController@test'); // 调试接口
+Route::get('redis', 'Api\TestController@redis'); // 商城秒杀
+
 
 Route::any('/','IndexController@test');
